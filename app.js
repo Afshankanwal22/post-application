@@ -1,152 +1,96 @@
-// let postForm=document.getElementById("postForm");
-// let title=document.getElementById("title");
-// let content=document.getElementById("content");
-// let submit=document.getElementById("submitBtn");
-// let message=document.getElementById("message")
-// let postsContainer=document.getElementById("postsContainer");
+const postForm = document.getElementById("postForm");
+const titleInput = document.getElementById("title");
+const contentInput = document.getElementById("content");
+const submitBtn = document.getElementById("submitBtn");
+const message = document.getElementById("message");
+const postsContainer = document.getElementById("postsContainer");
 
-// let posts=[];
-// let editingId=null;
+let selectedMedia = { photo: null, video: null, audio: null };
 
-// postForm.addEventListener("submit",function(e){
-// e.preventDefault();
-// const title=title.value.trim();
-// const content=content.value.trim();
+document.getElementById("photoBtn").addEventListener("click", () => {
+  document.getElementById("photoInput").click();
+});
+document.getElementById("videoBtn").addEventListener("click", () => {
+  document.getElementById("videoInput").click();
+});
+document.getElementById("audioBtn").addEventListener("click", () => {
+  document.getElementById("audioInput").click();
+});
+document.getElementById("locationBtn").addEventListener("click", () => {
+  alert("📍 Location feature coming soon!");
+});
 
-// if (title && content) {
-//     if (editingId) {
-//         posts=posts.map(post =>
-//       post.id === editingId ? {...post,title,content} : post
-//         );
-      
-//         showMessage("Post Updated!")
-//         editingId= null;
-//         submit.textContent = "Add Post";
-//     }
-//     else{
-//         const newPost={
-//             id: Date.now(),
-//             title,
-//             content
-//         };
-//         posts.unshift(newPost);
-//         showMessage("Post added!");
-//     }
-//     postForm.reset();
-//     renderPosts();
-    
-// }
-// });
+document.getElementById("photoInput").addEventListener("change", (e) => {
+  selectedMedia.photo = e.target.files[0] || null;
+});
 
-// function renderPosts() {
-//     postsContainer.innerHTML=" ";
-//     for (let i = 0; i < posts.length; i++) {
-//         const post = posts[i];
+document.getElementById("videoInput").addEventListener("change", (e) => {
+  selectedMedia.video = e.target.files[0] || null;
+});
 
-//         const postEl=document.createElement("div");
-//         postEl.className = "post";
-//         postEl.innerHTML=`
-//         <h3>${post.title}</h3>
-//       <p>${post.content}</p>
-//       <div class="actions">
-//         <button onclick="editPost(${post.id})"><i class="fas fa-edit"></i></button>
-//         <button onclick="deletePost(${post.id})"><i class="fas fa-trash-alt"></i></button>
-//       </div>`
-//          postsContainer.appendChild(postEl);
-//     };    
-// }
-//  function deletePost(id) {
-//     posts=posts.filter(post => post.id !==id);
-//     renderPosts();
-//     showMessage("Post Deleted");
-//  }
-// function editPost(id) {
-//     const post=posts.find(p => p.id === id);
-//     if (post) {
-//        title.value=post.title;
-//        content.value=post.content ;
-//        editingId=id;
-//        submit.textContent="Update Post";
-//     }
-// }
-// function showMessage(text) {
-//     message.textContent= text;
-//     setTimeout(() => message.textContent ="",2000)
-// }
-let postForm = document.getElementById("postForm");
-let titleInput = document.getElementById("title");
-let contentInput = document.getElementById("content");
-let submit = document.getElementById("submitBtn");
-let message = document.getElementById("message");
-let postsContainer = document.getElementById("postsContainer");
+document.getElementById("audioInput").addEventListener("change", (e) => {
+  selectedMedia.audio = e.target.files[0] || null;
+});
 
-let posts = [];
-let editingId = null;
-
-postForm.addEventListener("submit", function (e) {
+postForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
   const title = titleInput.value.trim();
   const content = contentInput.value.trim();
 
-  if (title && content) {
-    if (editingId) {
-      posts = posts.map(post =>
-        post.id === editingId ? { ...post, title, content } : post
-      );
-      showMessage("Post Updated!");
-      editingId = null;
-      submit.textContent = "Add Post";
-    } else {
-      const newPost = {
-        id: Date.now(),
-        title,
-        content
-      };
-      posts.unshift(newPost);
-      showMessage("Post Added!");
-    }
+  if (!title || !content) return;
 
-    postForm.reset();
-    renderPosts();
+  const postDiv = document.createElement("div");
+  postDiv.className = "post";
+
+  postDiv.innerHTML = `
+    <h3>${title}</h3>
+    <p>${content}</p>
+  `;
+
+  // Add photo if selected
+  if (selectedMedia.photo) {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(selectedMedia.photo);
+    img.style.maxWidth = "300px";
+    img.style.marginTop = "10px";
+    postDiv.appendChild(img);
   }
+
+  // Add video if selected
+  if (selectedMedia.video) {
+    const video = document.createElement("video");
+    video.src = URL.createObjectURL(selectedMedia.video);
+    video.controls = true;
+    video.style.maxWidth = "300px";
+    video.style.marginTop = "10px";
+    postDiv.appendChild(video);
+  }
+
+  // Add audio if selected
+  if (selectedMedia.audio) {
+    const audio = document.createElement("audio");
+    audio.src = URL.createObjectURL(selectedMedia.audio);
+    audio.controls = true;
+    audio.style.marginTop = "10px";
+    postDiv.appendChild(audio);
+  }
+
+  const actionsDiv = document.createElement("div");
+  actionsDiv.className = "actions";
+  actionsDiv.innerHTML = `
+    <button onclick="this.parentElement.parentElement.remove(); showMessage('🗑️ Post Deleted!')">Delete</button>
+  `;
+  postDiv.appendChild(actionsDiv);
+
+  postsContainer.prepend(postDiv);
+
+  postForm.reset();
+  selectedMedia = { photo: null, video: null, audio: null };
+  showMessage("✅ Post added successfully!");
 });
 
-function renderPosts() {
-  postsContainer.innerHTML = "";
-  for (let i = 0; i < posts.length; i++) {
-    const post = posts[i];
-
-    const postEl = document.createElement("div");
-    postEl.className = "post";
-    postEl.innerHTML = `
-      <h3>${post.title}</h3>
-      <p>${post.content}</p>
-      <div class="actions">
-        <button onclick="editPost(${post.id})"><i class="fas fa-edit"></i></button>
-        <button onclick="deletePost(${post.id})"><i class="fas fa-trash-alt"></i></button>
-      </div>
-    `;
-    postsContainer.appendChild(postEl);
-  }
-}
-
-function deletePost(id) {
-  posts = posts.filter(post => post.id !== id);
-  renderPosts();
-  showMessage("Post Deleted!");
-}
-
-function editPost(id) {
-  const post = posts.find(p => p.id === id);
-  if (post) {
-    title.value = post.title;
-    content.value = post.content;
-    editingId = id;
-    submit.textContent = "Update Post";
-  }
-}
- 
 function showMessage(text) {
   message.textContent = text;
-  setTimeout(() => message.textContent = "", 2000);
+  setTimeout(() => (message.textContent = ""), 2000);
 }

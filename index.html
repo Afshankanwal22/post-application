@@ -5,36 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post App</title>
     <link rel="stylesheet" href="style.css">
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
      <div class="container">
-    <h1><i class="fas fa-pen-fancy"></i> Post Creator</h1>
+    <h1><i class="fas fa-pen-fancy"></i>Create Post </h1>
 
     <form id="postForm">
       <input type="text" id="title" placeholder="Post Title" required />
       <textarea id="content" rows="4" placeholder="Write your post..." required></textarea>
+    <input type="file" id="photoInput" accept="image/*" style="display: none;">
+      <input type="file" id="videoInput" accept="video/*" style="display: none;">
+      <input type="file" id="audioInput" accept="audio/*" style="display: none;">
+    
+   <div class="media-options">
+        <span id="photoBtn"><i class="fas fa-image"></i> Photo</span>
+        <span id="videoBtn"><i class="fas fa-video"></i> Video</span>
+        <span id="audioBtn"><i class="fas fa-microphone"></i> Voice</span>
+        <span id="locationBtn"><i class="fas fa-map-marker-alt"></i> Check In</span>
+      </div>
       <button type="submit" id="submitBtn">Add Post</button>
     </form>
 
     <p id="message" class="message"></p>
 
     <div id="postsContainer" class="posts"></div>
-  </div>
-
-<!-- 
-    <footer>
-      <p>Built with ❤️ using HTML, CSS & JS</p>
-    </footer> -->
-   
     
-
-
-
-
+  </div>
+  
     <script src="app.js"></script>
 </body>
 </html>
