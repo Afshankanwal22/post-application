@@ -1,70 +1,25 @@
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
- * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 28px;
-      color: #ffd369;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      font-size: 16px;
-      background: #333;
-      color: #fff;
-    }
-
-    .media-options {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 20px;
-    }
-
-    .media-options span {
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 10px;
-      background: #2b2b2b;
-      transition: 0.3s;
-      font-size: 14px;
-    }
-
-    .media-options span:hover {
-      background: #444;
-      color: #ffd369;
-    }
-
-    .media-options i {
-      margin-right: 5px;
-    }
-
-
-   body {
+body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* More vibrant and smooth */
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 20px;
+  padding: 15px;
 }
 
 .container {
-  background: rgba(255, 255, 255, 0.05); 
-  backdrop-filter: blur(10px); 
-  -webkit-backdrop-filter: blur(10px);
-  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 25px;
   border-radius: 16px;
   width: 100%;
   max-width: 500px;
@@ -72,9 +27,40 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #ffd369;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  background: #333;
+  color: #fff;
+}
+
+input[type="file"] {
+  display: none;
+}
+.media-options span:hover {
+  background: #444;
+  color: #ffd369;
+}
+
+.media-options i {
+  font-size: 18px;
+  transition: 0.3s;
+}
+
 button {
   width: 100%;
-  background: linear-gradient(to right, #ff416c, #ff4b2b); /* Vibrant gradient */
+  background: linear-gradient(to right, #00c9ff, #92fe9d);
   color: white;
   padding: 12px;
   border: none;
@@ -86,37 +72,54 @@ button {
 }
 
 button:hover {
-  background: linear-gradient(to right, #ff4b2b, #ff416c);
-  box-shadow: 0 0 15px #ff416c, 0 0 30px #ff4b2b;
+  background: linear-gradient(to right, #92fe9d, #00c9ff);
+  box-shadow: 0 0 15px #92fe9d, 0 0 30px #00c9ff;
 }
-  input[type="file"] {
-      display: none;
-    }
 
-    .media-options {
+.message {
+  margin-top: 15px;
+  text-align: center;
+  color: #ffd369;
+  font-size: 14px;
+}
+
+.media-options {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 25px; 
-  gap: 15px; 
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .media-options span {
   cursor: pointer;
-  padding: 10px 18px; 
+  padding: 10px 14px;
   border-radius: 10px;
   background: #2b2b2b;
   transition: 0.3s;
   font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 8px; 
-  user-select: none;
-}
-
-.media-options span:hover {
-  background: #444;
-  color: #ffd369;
+  justify-content: center;
+  gap: 6px;
+  flex: 1 1 auto; 
 }
 
 
+@media (max-width: 500px) {
+  .media-options {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
+  .media-options span {
+    flex: 1 1 45%;
+    font-size: 12px;
+    padding: 8px 10px;
+    gap: 4px;
+  }
+
+  .media-options i {
+    font-size: 14px;
+  }
+}

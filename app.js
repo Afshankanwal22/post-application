@@ -1,3 +1,4 @@
+
 const postForm = document.getElementById("postForm");
 const titleInput = document.getElementById("title");
 const contentInput = document.getElementById("content");
@@ -6,6 +7,7 @@ const message = document.getElementById("message");
 const postsContainer = document.getElementById("postsContainer");
 
 let selectedMedia = { photo: null, video: null, audio: null };
+let editingPost = null;
 
 document.getElementById("photoBtn").addEventListener("click", () => {
   document.getElementById("photoInput").click();
@@ -23,11 +25,9 @@ document.getElementById("locationBtn").addEventListener("click", () => {
 document.getElementById("photoInput").addEventListener("change", (e) => {
   selectedMedia.photo = e.target.files[0] || null;
 });
-
 document.getElementById("videoInput").addEventListener("change", (e) => {
   selectedMedia.video = e.target.files[0] || null;
 });
-
 document.getElementById("audioInput").addEventListener("change", (e) => {
   selectedMedia.audio = e.target.files[0] || null;
 });
@@ -37,7 +37,6 @@ postForm.addEventListener("submit", (e) => {
 
   const title = titleInput.value.trim();
   const content = contentInput.value.trim();
-
   if (!title || !content) return;
 
   const postDiv = document.createElement("div");
@@ -48,7 +47,6 @@ postForm.addEventListener("submit", (e) => {
     <p>${content}</p>
   `;
 
-  // Add photo if selected
   if (selectedMedia.photo) {
     const img = document.createElement("img");
     img.src = URL.createObjectURL(selectedMedia.photo);
@@ -57,7 +55,6 @@ postForm.addEventListener("submit", (e) => {
     postDiv.appendChild(img);
   }
 
-  // Add video if selected
   if (selectedMedia.video) {
     const video = document.createElement("video");
     video.src = URL.createObjectURL(selectedMedia.video);
@@ -67,7 +64,6 @@ postForm.addEventListener("submit", (e) => {
     postDiv.appendChild(video);
   }
 
-  // Add audio if selected
   if (selectedMedia.audio) {
     const audio = document.createElement("audio");
     audio.src = URL.createObjectURL(selectedMedia.audio);
@@ -75,21 +71,38 @@ postForm.addEventListener("submit", (e) => {
     audio.style.marginTop = "10px";
     postDiv.appendChild(audio);
   }
-
+  
   const actionsDiv = document.createElement("div");
   actionsDiv.className = "actions";
-  actionsDiv.innerHTML = `
-    <button onclick="this.parentElement.parentElement.remove(); showMessage('🗑️ Post Deleted!')">Delete</button>
-  `;
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.innerHTML = "🗑️ Delete";
+  deleteBtn.onclick = () => {
+    postDiv.remove();
+    showMessage("🗑️ Post Deleted!");
+  };
+
+  const editBtn = document.createElement("button");
+  editBtn.innerHTML = "✏️ Edit";
+  editBtn.onclick = () => {
+    titleInput.value = title;
+    contentInput.value = content;
+    postDiv.remove();
+    showMessage("✏️ Editing mode: Update and Submit");
+  };
+
+  actionsDiv.appendChild(deleteBtn);
+  actionsDiv.appendChild(editBtn);
   postDiv.appendChild(actionsDiv);
 
-  postsContainer.prepend(postDiv);
+  postsContainer.prepend(postDiv); 
 
   postForm.reset();
   selectedMedia = { photo: null, video: null, audio: null };
   showMessage("✅ Post added successfully!");
 });
 
+// Show message
 function showMessage(text) {
   message.textContent = text;
   setTimeout(() => (message.textContent = ""), 2000);
