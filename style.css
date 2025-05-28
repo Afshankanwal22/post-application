@@ -122,6 +122,18 @@ button:hover {
   .media-options i {
     font-size: 14px;
   }
+   #emojiPicker {
+    max-width: 100vw; /* full screen width */
+    white-space: nowrap;
+    max-height: 100px;  /* smaller height */
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 0 0 10px 10px;
+  }
 }
 .content-row {
   display: flex;
