@@ -107,3 +107,30 @@ function showMessage(text) {
   message.textContent = text;
   setTimeout(() => (message.textContent = ""), 2000);
 }
+
+
+const emojiToggleBtn = document.getElementById("emojiToggleBtn");
+const emojiPicker = document.getElementById("emojiPicker");
+
+emojiToggleBtn.addEventListener("click", () => {
+  emojiPicker.style.display = emojiPicker.style.display === "block" ? "none" : "block";
+});
+
+emojiPicker.addEventListener("click", (e) => {
+  if (e.target.tagName === "SPAN") {
+    const emoji = e.target.textContent;
+    const cursorPos = contentInput.selectionStart;
+    const textBefore = contentInput.value.substring(0, cursorPos);
+    const textAfter = contentInput.value.substring(cursorPos);
+    contentInput.value = textBefore + emoji + textAfter;
+    contentInput.focus();
+    contentInput.selectionEnd = cursorPos + emoji.length;
+  }
+});
+
+
+document.addEventListener("click", (e) => {
+  if (!emojiPicker.contains(e.target) && e.target.id !== "emojiToggleBtn") {
+    emojiPicker.style.display = "none";
+  }
+});
