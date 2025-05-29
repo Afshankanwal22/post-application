@@ -77,6 +77,7 @@ postForm.addEventListener("submit", (e) => {
 
   const deleteBtn = document.createElement("button");
   deleteBtn.innerHTML = "🗑️ Delete";
+  deleteBtn.className = "action-btn";
   deleteBtn.onclick = () => {
     postDiv.remove();
     showMessage("🗑️ Post Deleted!");
@@ -84,6 +85,7 @@ postForm.addEventListener("submit", (e) => {
 
   const editBtn = document.createElement("button");
   editBtn.innerHTML = "✏️ Edit";
+  editBtn.className = "action-btn";
   editBtn.onclick = () => {
     titleInput.value = title;
     contentInput.value = content;
